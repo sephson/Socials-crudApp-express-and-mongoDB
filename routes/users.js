@@ -41,4 +41,16 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+//get a user
+router.get("/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    //this line of code gives the object without the password etc
+    const { password, updatedAt, createdAt, ...other } = user._doc; //user._doc refers to the user object
+    res.status(200).json(other);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 module.exports = router;
