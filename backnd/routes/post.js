@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Post = require("../models/Post");
+const User = require("../models/User");
 
 //create post
 router.post("/", async (req, res) => {
@@ -77,12 +78,18 @@ router.get("/:id", async (req, res) => {
 
 //get timeline posts
 
-router.get("/timeline/all", async (req, res) => {
+router.get("/timeline/:userId", async (req, res) => {
   try {
-    const currentUser = await User.findById(req.body.userId);
+    //user with the entered id in the database
+    const currentUser = await User.findById(req.params.userId);
+    console.log(req.params.userId);
+    //checking for post that haave a userId you entered, which means they are your posts
     const userPosts = await Post.find({ userId: currentUser._id });
+
+    //since we are using a loop we have to use promise.all, using await alone wont fetch alll
     const friendPosts = await Promise.all(
-      currentUser.followings.map((friendId) => {
+      //the ids of the people you are following
+      currentUser.following.map((friendId) => {
         return Post.find({ userId: friendId });
       })
     );
