@@ -99,4 +99,37 @@ router.get("/timeline/:userId", async (req, res) => {
   }
 });
 
+// router.get("/timeline/:id", async (req, res) => {
+//   console.log(req.params.id);
+//   try {
+//     const currUser = await User.findById(req.params.id).exec();
+
+// const currentUser = await User.findById(req.params.userId);
+// console.log(req.params.userId);
+// const userPosts = await Post.find({ userId: currentUser._id });
+// const friendPosts = await Promise.all(
+//   currentUser.followings.map((friendId) => {
+//     return Post.find({ userId: friendId });
+//   })
+// );
+//     res.status(200).json(currUser);
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
+
+//get user all post
+router.get("/profile/:username", async (req, res) => {
+  try {
+    //since there is no username in the post model in the DB
+    //first we find the username in the users model
+    const user = await User.findOne({ username: req.params.username });
+    //now find all post that has a userId of the user we found above
+    const posts = await Post.find({ userId: user._id });
+    res.status(200).json(posts);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
