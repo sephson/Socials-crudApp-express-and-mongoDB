@@ -5,21 +5,21 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Feed from "../../components/feed/Feed";
 import Rightbar from "../../components/rightbar/Rightbar";
 import axios from "axios";
+import { useParams } from "react-router";
 export default function Profile() {
   const [user, setUser] = useState({});
+  const username = useParams().username;
   const pf = process.env.REACT_APP_PUBLIC_FOLDER;
 
   useEffect(() => {
     const fetchUser = async () => {
-      const { data } = await axios.get(`/api/users?username=new`);
+      const { data } = await axios.get(`/api/users?username=${username}`);
       setUser(data);
-      console.log(data);
     };
 
     fetchUser();
-  }, []);
+  }, [username]);
 
-  console.log(user.username);
   return (
     <>
       <Topbar />
@@ -35,7 +35,11 @@ export default function Profile() {
               />
               <img
                 className="profileUserImg"
-                src={`${pf}/person/7.jpeg`}
+                src={
+                  user.profilePicture
+                    ? user.profilePicture
+                    : pf + "person/a.png"
+                }
                 alt=""
               />
             </div>
@@ -45,7 +49,7 @@ export default function Profile() {
             </div>
           </div>
           <div className="profileRightBottom">
-            <Feed username="new" />
+            <Feed username={username} />
             <Rightbar user={user} />
           </div>
         </div>
