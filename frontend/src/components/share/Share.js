@@ -8,14 +8,13 @@ export default function Share() {
   const { user } = useContext(AuthContext);
   const pf = process.env.REACT_APP_PUBLIC_FOLDER;
   const desc = useRef();
-
   const [file, setFile] = useState(null);
 
   const fileHandler = (e) => {
     setFile(e.target.files[0]); //uploads only one file
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
 
     const newPost = {
@@ -23,9 +22,26 @@ export default function Share() {
       desc: desc.current.value,
     };
 
+    if (file) {
+      const data = new FormData();
+      const fileName = Date.now() + file.name;
+      data.append("name", fileName);
+      data.append("file", file);
+      newPost.img = fileName;
+      console.log(newPost);
+      try {
+        await axios.post("/api/upload", data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
     try {
-      axios.post("/api/posts", newPost);
-    } catch (err) {}
+      await axios.post("/api/posts", newPost);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
