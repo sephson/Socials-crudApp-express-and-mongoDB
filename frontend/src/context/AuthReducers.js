@@ -23,10 +23,10 @@ const AuthReducer = (state, action) => {
 
     case "FOLLOW":
       return {
-        ...state,
+        ...state, //spread previous state, user, isFetching and error
         user: {
-          ...state.user,
-          following: [...state.user.following, action.payload],
+          ...state.user, //spread previous state of user profile, desc, followers etc
+          following: [...state.user.following, action.payload], //...state.user.following spread the previous followers then uses action.payload to add new follower
         },
       };
 
