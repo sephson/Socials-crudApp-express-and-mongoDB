@@ -34,7 +34,7 @@ export default function Post({ post }) {
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
-
+  console.log(post);
   const pf = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div className="post">

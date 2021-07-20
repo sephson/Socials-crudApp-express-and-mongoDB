@@ -1,0 +1,16 @@
+POST http://localhost:8000/api/convo HTTP/1.1
+
+content-type: application/json
+{
+    "senderId": "60e6e8e7b947431de8fc01fe", 
+    "receiverId": "60e6e912b947431de8fc0202"
+}
+
+###
+
+POST http://localhost:8000/api/convo/test HTTP/1.1
+
+content-type: application/json
+{
+  "name": "Toyin"
+}

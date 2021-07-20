@@ -27,7 +27,7 @@ function Feed({ username }) {
       console.log(username, user.username);
     };
     fetchPosts();
-  }, [username, user._id]);
+  }, [username, user.username, user._id]);
   return (
     <div className="feed">
       <div className="feedWrapper">

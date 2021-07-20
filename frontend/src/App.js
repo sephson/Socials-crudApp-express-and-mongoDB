@@ -4,6 +4,7 @@ import Register from "./pages/register/Register";
 import Profile from "./pages/profile/Profile";
 import React, { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
+import Messenger from "./pages/Messenger/mess";
 import {
   BrowserRouter as Router,
   Switch,
@@ -26,6 +27,10 @@ function App() {
           </Route>
           <Route path="/profile/:username">
             <Profile />
+          </Route>
+          <Route path="/messenger">
+            {!user ? <Redirect to="/" /> : <Messenger />}
+            {/* <Messenger /> */}
           </Route>
         </Switch>
       </Router>
