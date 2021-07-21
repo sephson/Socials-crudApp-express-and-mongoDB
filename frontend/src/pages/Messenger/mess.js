@@ -1,6 +1,13 @@
 import "./mess.css";
 import Topbar from "../../components/Header";
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, {
+  createRef,
+  useState,
+  useContext,
+  useEffect,
+  useRef,
+} from "react";
+import Picker, { SKIN_TONE_MEDIUM_DARK } from "emoji-picker-react";
 import { AuthContext } from "../../context/AuthContext";
 import Conversation from "../../components/convo/convo";
 import Message from "../../components/message/message";
@@ -19,6 +26,8 @@ const Messenger = () => {
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const scrollRef = useRef();
+  const inputRef = createRef();
+  const [chosenEmoji, setChosenEmoji] = useState(false);
 
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
@@ -104,6 +113,11 @@ const Messenger = () => {
     scrollRef.current?.scrollIntoView({ behaviour: "smooth" });
   }, [messages]);
 
+  const handleEmoji = () => {
+    // inputRef.current.focus();
+    setChosenEmoji(!chosenEmoji);
+  };
+
   console.log(messages);
 
   return (
@@ -154,6 +168,15 @@ const Messenger = () => {
               <button onClick={handleSubmit} className="chatSubmitButton">
                 Send
               </button>
+              <div>
+                {chosenEmoji ? (
+                  <span>You chose: {chosenEmoji.emoji}</span>
+                ) : (
+                  <span>No emoji Chosen</span>
+                )}
+                <Picker onEmojiClick={handleEmoji} />
+              </div>
+              <button onClick={handleEmoji}>Emoji</button>
             </div>
           </div>
         </div>
