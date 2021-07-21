@@ -1,8 +1,10 @@
 import "./chatOnline.css";
-import React from "react";
+import React, { useState } from "react";
 
-const chatOnline = ({ user }) => {
+const ChatOnline = ({ onlineUsers, user, currentId, setCurrentChat }) => {
   const pf = process.env.REACT_APP_PUBLIC_FOLDER;
+  const [friends, setFriends] = useState([]);
+  const [onlineFriends, setOnlineFriends] = useState([]);
   return (
     <div className="chatOnline">
       <div className="chatOnlineFriend">
@@ -22,4 +24,4 @@ const chatOnline = ({ user }) => {
   );
 };
 
-export default chatOnline;
+export default ChatOnline;

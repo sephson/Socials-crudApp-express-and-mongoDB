@@ -17,7 +17,7 @@ const Messenger = () => {
   const [newMessage, setNewMessage] = useState("");
   const socket = useRef();
   const [arrivalMessage, setArrivalMessage] = useState(null);
-
+  const [onlineUsers, setOnlineUsers] = useState([]);
   const scrollRef = useRef();
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const Messenger = () => {
 
   useEffect(() => {
     arrivalMessage &&
-      currentChat?.members.includes(arrivalMessage) &&
+      currentChat?.members.includes(arrivalMessage.sender) &&
       setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, currentChat]);
 
@@ -87,14 +87,13 @@ const Messenger = () => {
 
     socket.current.emit("sendMessage", {
       senderId: user._id,
-      // receiverId: receiverId,
       receiverId,
       text: newMessage,
     });
 
     try {
       const { data } = await axios.post(`/api/messages/`, message);
-      setNewMessage([...messages, data]);
+      setMessages([...messages, data]);
       setNewMessage("");
     } catch (err) {
       console.log(err);
@@ -102,7 +101,7 @@ const Messenger = () => {
   };
 
   useEffect(() => {
-    scrollRef.current.scrollIntoView({ behaviour: "smooth" });
+    scrollRef.current?.scrollIntoView({ behaviour: "smooth" });
   }, [messages]);
 
   console.log(messages);
@@ -160,7 +159,12 @@ const Messenger = () => {
         </div>
         <div className="chatOnline">
           <div className="chatOnlineWrapper">
-            <ChatOnline user={user} />
+            <ChatOnline
+              currentId={user._id}
+              user={user}
+              onlineUsers={onlineUsers}
+              setCurrentChat={setCurrentChat}
+            />
           </div>
         </div>
       </div>
