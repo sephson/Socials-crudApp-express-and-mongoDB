@@ -30,7 +30,7 @@ const Messenger = () => {
   const [chosenEmoji, setChosenEmoji] = useState(false);
 
   useEffect(() => {
-    socket.current = io("ws://localhost:8900");
+    socket.current = io("https://whispering-mesa-94633.herokuapp.com/");
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,
@@ -168,15 +168,6 @@ const Messenger = () => {
               <button onClick={handleSubmit} className="chatSubmitButton">
                 Send
               </button>
-              <div>
-                {chosenEmoji ? (
-                  <span>You chose: {chosenEmoji.emoji}</span>
-                ) : (
-                  <span>No emoji Chosen</span>
-                )}
-                <Picker onEmojiClick={handleEmoji} />
-              </div>
-              <button onClick={handleEmoji}>Emoji</button>
             </div>
           </div>
         </div>
