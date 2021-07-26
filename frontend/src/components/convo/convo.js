@@ -1,12 +1,9 @@
 import "./convo.css";
 import React, { useState, useEffect } from "react";
-import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 const Convo = ({ convo, currentUser }) => {
   const [user, setUser] = useState(null);
 
-  // const { user } = useContext(AuthContext);
-  const pf = process.env.REACT_APP_PUBLIC_FOLDER;
 
   useEffect(() => {
     const friendId = convo.members.find((m) => m !== currentUser._id); //this gives the uderid which isnt the user's id

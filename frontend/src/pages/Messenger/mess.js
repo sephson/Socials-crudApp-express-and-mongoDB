@@ -16,17 +16,15 @@ import { io } from "socket.io-client";
 
 const Messenger = () => {
   const { user } = useContext(AuthContext);
-  const pf = process.env.REACT_APP_PUBLIC_FOLDER;
+
   const [convo, setConvo] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const socket = useRef();
   const [arrivalMessage, setArrivalMessage] = useState(null);
-  const [onlineUsers, setOnlineUsers] = useState([]);
+
   const scrollRef = useRef();
-  const inputRef = createRef();
-  const [chosenEmoji, setChosenEmoji] = useState(false);
 
   useEffect(() => {
     socket.current = io("https://mern-reachme-app.herokuapp.com/");
@@ -111,11 +109,6 @@ const Messenger = () => {
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behaviour: "smooth" });
   }, [messages]);
-
-  const handleEmoji = () => {
-    // inputRef.current.focus();
-    setChosenEmoji(!chosenEmoji);
-  };
 
   console.log(messages);
 
