@@ -7,7 +7,6 @@ import React, {
   useEffect,
   useRef,
 } from "react";
-import Picker, { SKIN_TONE_MEDIUM_DARK } from "emoji-picker-react";
 import { AuthContext } from "../../context/AuthContext";
 import Conversation from "../../components/convo/convo";
 import Message from "../../components/message/message";
