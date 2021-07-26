@@ -1,26 +1,24 @@
 const express = require("express");
 const helmet = require("helmet");
 const mongoose = require("mongoose");
-const dotenv = require("dotenv");
 const morgan = require("morgan");
+const http = require("http");
 const userRoute = require("./routes/users");
 const authRoute = require("./routes/auth");
 const postRoute = require("./routes/post");
 const convoRoute = require("./routes/convoRoute");
 const messageRoute = require("./routes/messageRoute");
-
 const multer = require("multer");
 const path = require("path");
+require("dotenv").config({ path: path.resolve(__dirname, "./.env") });
 const app = express();
-const io = require("socket.io")(8900, {
-  cors: {
-    origin: "https://whispering-mesa-94633.herokuapp.com/",
-  },
-});
+const socketio = require("socket.io");
+const cors = require("cors");
+const server = http.createServer(app);
+const io = socketio(server);
 
-dotenv.config();
 mongoose.connect(
-  process.env.MONGO_URL,
+  "mongodb+srv://Disu:mRwU37UE7xGhWy8@mern.q65fc.mongodb.net/socialsDB",
   {
     useCreateIndex: true,
 
@@ -50,6 +48,7 @@ const getUser = (userId) => {
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 //middleware
+app.use(cors());
 app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
@@ -70,6 +69,10 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
+});
+
+app.get("/", (req, res) => {
+  res.status(200).json("Up and running");
 });
 
 app.use("/api/users", userRoute);

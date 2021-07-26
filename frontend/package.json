@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "proxy": "https://whispering-mesa-94633.herokuapp.com/",
+  "proxy": "https://mern-reachme.herokuapp.com/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
