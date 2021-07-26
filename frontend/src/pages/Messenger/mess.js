@@ -30,7 +30,7 @@ const Messenger = () => {
   const [chosenEmoji, setChosenEmoji] = useState(false);
 
   useEffect(() => {
-    socket.current = io("https://mern-reachme.herokuapp.com/");
+    socket.current = io("https://mern-reachme-app.herokuapp.com/");
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,
