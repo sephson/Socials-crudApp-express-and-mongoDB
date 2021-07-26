@@ -1,7 +1,7 @@
 import "./chatOnline.css";
 import React from "react";
 
-const ChatOnline = ({ onlineUsers, user, currentId, setCurrentChat }) => {
+const ChatOnline = ({ user }) => {
   const pf = process.env.REACT_APP_PUBLIC_FOLDER;
 
   return (
